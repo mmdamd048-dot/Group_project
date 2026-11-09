@@ -1,3 +1,5 @@
+#include <fstream>
+#include <string>
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -24,6 +26,21 @@ public:
         std::cout << "FastInterceptor moving in a zigzag pattern.\n";
     }
 };
+// Added by Mohammad Anater: Robust High-Score File Loading Utility
+int loadBestScore(const std::string& filename) {
+std::ifstream file(filename);
+if (!file.is_open()) {
+std::cout << "[Warning] Score file '" << filename << "' missing. Defaulting best score to 0.\n";
+return 0; // Fallback default best score
+}
+int bestScore = 0;
+file >> bestScore;
+if (file.fail()) {
+std::cout << "[Warning] Score file malformed. Using default best score.\n";
+return 0;
+}
+return bestScore;
+}
 
 int main() {
     std::cout << "=== Sky Defending Starting Program ===\n\n";
